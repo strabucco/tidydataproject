@@ -28,7 +28,9 @@ combine_data<-rbind(new_train, new_test)
 #combine_data3<-as.data.frame(sapply(combine_data2, as.numeric))
 meanData<-grep("mean", combine_data, ignore.case = TRUE )
 stdData<-grep("std", combine_data, ignore.case = TRUE)
-
+index<-c(meanData, stdData)
+DataOfInterest<-combine_data[,index]
+str(DataOfInterest)
 
 #write.table(new_train, file="new_train_test.txt", row.names=FALSE)
 #new<-read.table("new_train_test.txt", header=TRUE)
