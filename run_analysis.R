@@ -10,6 +10,13 @@ feature_names<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingDat
 #names(feature_names)
 #str(feature_names)
 row_names<-t(feature_names)
-#row_names
-new_train<- cbind(trainsub, movement_train, values_train)
-#str(new_train)
+#row 2 of row_names will become the new column names
+just_names<-row_names[-1,]
+column_names<-make.names(just_names)
+values_withNames<-rbind(column_names,values_train)
+trainSubjectTitle<-rbind("Subject_ID", trainsub)
+movementTrainTitle<-rbind("Movement_name", movement_train)
+new_train<- cbind(trainSubjectTitle, movementTrainTitle, values_withNames)
+write.table(new_train, file="new_train_test.txt", row.names=FALSE)
+new<-read.table("new_train_test.txt", header=TRUE)
+new
