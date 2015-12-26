@@ -23,8 +23,12 @@ new_test<-cbind(sub_test, movement_test, values_test)
 
 combine_data<-rbind(new_train, new_test)
 #adding the test data to the end of the training set
+#colnames(combine_data)<-combine_data[1, ]
+#combine_data2<- as.data.frame(combine_data[-1,])
+#combine_data3<-as.data.frame(sapply(combine_data2, as.numeric))
+meanData<-grep("mean", combine_data, ignore.case = TRUE )
+stdData<-grep("std", combine_data, ignore.case = TRUE)
 
-str(combine_data)
 
 #write.table(new_train, file="new_train_test.txt", row.names=FALSE)
 #new<-read.table("new_train_test.txt", header=TRUE)
