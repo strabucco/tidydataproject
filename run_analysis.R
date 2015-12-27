@@ -128,8 +128,7 @@ DataOfInterest[1,88]<-"f.Body.Gyroscope.Jerk.Magnitude.std"
 colnames(DataOfInterest)<-DataOfInterest[1, ]
 DataOfInterest2<- as.data.frame(DataOfInterest[-1,])
 
-head(DataOfInterest2, n=3)
 DataOfInterest2[, c(3:ncol(DataOfInterest2))]<-sapply(DataOfInterest2[, c(3:ncol(DataOfInterest2))], as.numeric)
 Summary<-DataOfInterest2 %>% group_by(Movement_name, Subject_ID) %>% summarize_each(funs(mean))
 write.table(Summary, file="Summary.txt", row.names=FALSE)
-str(Summary)
+
