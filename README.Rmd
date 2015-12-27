@@ -4,19 +4,35 @@ author: "STrabucco"
 date: "December 26, 2015"
 output: html_document
 ---
+This R project depends on data collected, organized, and originally documented from the following source: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+A 'README.txt' file is included with the downloadable data from the above source which describes the original data collection and parameters.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This document and the codebook (CODEBOOK.Rmd) included in this project will briefly summarize the data and describe the script for cleaning and tidying the data for future analysis.
 
-```{r}
-summary(cars)
-```
+Intially the data from the original source was split into two sets: training and testing. The training data set included 70% of the participants (total of 30 volunteers), while the remaining test data set accounts for 30% of participants.
 
-You can also embed plots, for example:
+For each type of data set the files were split into 4 types:
+1. features.txt: describes the variables measured and calculated
+2. subject_text.txt: Subject IDs in rows corresponding to the values recorded in #4 below
+3. y_test.txt: type of movement recorded classified by numbers 1-6 in rows corresponding to the values recorded in #4 below
+4. X_text.txt: values recorded or calculated for 561 different variables, each in its own column
 
-```{r, echo=FALSE}
-plot(cars)
-```
+The 'run_analysis.R' script utilizes these files and first merges the subject and movement type data with the X test.txt file in order to associate each group of measurements and calculations with the individual subject and movement type. The organized test and training data sets are then merged to create one file with information about each variable, subject ID, movement ID and the values associated with each.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+From this combined data set a subset is created which includes all mean and std variables but excludes all others. 
+
+The numbers associated with the movement type from y_test.txt were then converted to the type of movement as below:
+1 WALKING
+2 WALKING_UPSTAIRS
+3 WALKING_DOWNSTAIRS
+4 SITTING
+5 STANDING
+6 LAYING
+
+In order to maintain tidy data standards the variable names were renamed for clarity. Details can be found within the codebook.
+
+The variable names were then converted to header names. Value columns were converted back to numeric vectors. 
+The data was then grouped first by movement type and then by subject ID and the mean for each variable was calculated. 
+
+This final smaller data table with the means of each variable by subject and movement type is written to a txt file.
