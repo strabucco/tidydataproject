@@ -1,5 +1,5 @@
 #This will be to tidy and merge my data
-
+library(dplyr)
 trainsub<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/train/subject_train.txt")
 movement_train<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/train/y_train.txt")
 values_train<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/train/X_train.txt")
@@ -23,9 +23,7 @@ new_test<-cbind(sub_test, movement_test, values_test)
 
 combine_data<-rbind(new_train, new_test)
 #adding the test data to the end of the training set
-#colnames(combine_data)<-combine_data[1, ]
-#combine_data2<- as.data.frame(combine_data[-1,])
-#combine_data3<-as.data.frame(sapply(combine_data2, as.numeric))
+
 meanData<-grep("mean", combine_data, ignore.case = TRUE )
 stdData<-grep("std", combine_data, ignore.case = TRUE)
 index<-c(1, 2, meanData, stdData)
@@ -33,7 +31,7 @@ DataOfInterest<-combine_data[,index]
 DataOfInterest[2][DataOfInterest[2]==1]<-"Walking"
 DataOfInterest[2][DataOfInterest[2]==2]<- "Walking_Upstairs"
 DataOfInterest[2][DataOfInterest[2]==3]<- "Walking_Downstairs"
-DataOfInterest[2][DataOfInterest[2]==2]<- "Sitting"
+DataOfInterest[2][DataOfInterest[2]==4]<- "Sitting"
 DataOfInterest[2][DataOfInterest[2]==5]<-"Standing"
 DataOfInterest[2][DataOfInterest[2]==6]<- "Laying"
 
@@ -123,6 +121,16 @@ DataOfInterest[1,85]<-"f.Body.Accelerometer.Magnitude.std"
 DataOfInterest[1,86]<-"f.Body.Accelerometer.Jerk.Magnitude.std"
 DataOfInterest[1,87]<-"f.Body.Gyroscope.Magnitude.std"
 DataOfInterest[1,88]<-"f.Body.Gyroscope.Jerk.Magnitude.std"
-Head(DataOfInterest, n=2)
-#write.table(new_train, file="new_train_test.txt", row.names=FALSE)
-#new<-read.table("new_train_test.txt", header=TRUE)
+
+
+#Convert<-type.convert(DataOfInterest[,])
+
+colnames(DataOfInterest)<-DataOfInterest[1, ]
+DataOfInterest2<- as.data.frame(DataOfInterest[-1,])
+#DataOfInterest3<-as.data.frame(sapply(DataOfInterest2, as.numeric))
+#str(DataOfInterest3)
+head(DataOfInterest2, n=3)
+DataOfInterest2[, c(3:ncol(DataOfInterest2))]<-sapply(DataOfInterest2[, c(3:ncol(DataOfInterest2))], as.numeric)
+Summary<-DataOfInterest2 %>% group_by(Movement_name, Subject_ID) %>% summarize_each(funs(mean))
+write.table(Summary, file="Summary.txt", row.names=FALSE)
+str(Summary)
