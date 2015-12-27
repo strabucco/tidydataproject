@@ -1,9 +1,9 @@
 #This will be to tidy and merge my data
 library(dplyr)
-trainsub<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/train/subject_train.txt")
-movement_train<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/train/y_train.txt")
-values_train<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/train/X_train.txt")
-feature_names<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/features.txt")
+trainsub<-read.table("subject_train.txt")
+movement_train<-read.table("y_train.txt")
+values_train<-read.table("X_train.txt")
+feature_names<-read.table("features.txt")
 row_names<-t(feature_names)
 #row 2 of row_names will become the new column names
 just_names<-row_names[-1,] #removing the extra row
@@ -14,9 +14,9 @@ movementTrainTitle<-rbind("Movement_name", movement_train) #adding column header
 new_train<- cbind(trainSubjectTitle, movementTrainTitle, values_withNames)
 # combining subject, movment ID and values into single table
 
-sub_test<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/test/subject_test.txt")
-movement_test<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/test/y_test.txt")
-values_test<-read.table("~/Documents/DataScienceCoursera/CleaningAndGettingData/Week_3_Project/forTidyData/UCI_HAR_Dataset/test/X_test.txt")
+sub_test<-read.table("subject_test.txt")
+movement_test<-read.table("y_test.txt")
+values_test<-read.table("X_test.txt")
 
 new_test<-cbind(sub_test, movement_test, values_test)
 #combing subject, movment ID and values for test data
