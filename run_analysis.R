@@ -123,12 +123,11 @@ DataOfInterest[1,87]<-"f.Body.Gyroscope.Magnitude.std"
 DataOfInterest[1,88]<-"f.Body.Gyroscope.Jerk.Magnitude.std"
 
 
-#Convert<-type.convert(DataOfInterest[,])
+
 
 colnames(DataOfInterest)<-DataOfInterest[1, ]
 DataOfInterest2<- as.data.frame(DataOfInterest[-1,])
-#DataOfInterest3<-as.data.frame(sapply(DataOfInterest2, as.numeric))
-#str(DataOfInterest3)
+
 head(DataOfInterest2, n=3)
 DataOfInterest2[, c(3:ncol(DataOfInterest2))]<-sapply(DataOfInterest2[, c(3:ncol(DataOfInterest2))], as.numeric)
 Summary<-DataOfInterest2 %>% group_by(Movement_name, Subject_ID) %>% summarize_each(funs(mean))
